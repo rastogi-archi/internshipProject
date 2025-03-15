@@ -7,7 +7,6 @@ import AddNewCoupon from "./pages/coupon/AddNewCoupon";
 import UserHome from "./pages/user/UserHome";
 import Navbar from "./components/Navbar";
 import EditCoupon from "./pages/coupon/EditCoupon";
-import CheckAuth from "./components/CheckAuth"
 
 function App() {
   const location = useLocation();
@@ -19,9 +18,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={
-          <CheckAuth>
             <UserHome />
-          </CheckAuth>
         } />
         <Route path="/login" element={
           <Login />
@@ -30,19 +27,13 @@ function App() {
           <Register />
         } />
         <Route path="/admin" element={
-          <CheckAuth>
             <AdminHome />
-          </CheckAuth>
         } />
         <Route path="/admin/add" element={
-          <CheckAuth>
             <AddNewCoupon />
-          </CheckAuth>
         } />
         <Route path="/admin/update/:id" element={
-          <CheckAuth>
             <EditCoupon />
-          </CheckAuth>
         } />
       </Routes>
 
