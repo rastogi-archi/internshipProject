@@ -8,7 +8,7 @@ const initialState = {
 }
 
 export const addNewCoupon = createAsyncThunk(
-    "/admin/coupon/add",
+    "/coupon/admin/add",
     async (formData) => {
         try {
             const response = await axios.post(
@@ -46,7 +46,7 @@ export const getAllCoupons = createAsyncThunk(
 
 
 export const claimCoupon = createAsyncThunk(
-    "coupon/claim",
+    "/coupon/claim",
     async (_, { rejectWithValue }) => {
         try {
             const response = await axios.post("http://localhost:5000/api/coupon/claim");
@@ -59,7 +59,7 @@ export const claimCoupon = createAsyncThunk(
 
 
 export const deleteCoupon = createAsyncThunk(
-    "/admin/coupon/delete",
+    "/coupon/admin/delete",
     async (id) => {
         try {
             const response = await axios.delete(
@@ -74,7 +74,7 @@ export const deleteCoupon = createAsyncThunk(
 
 
 export const updateCouponStatus = createAsyncThunk(
-    "/admin/coupon/toggleStatus",
+    "/coupon/admin/toggleStatus",
     async ({ id, data }) => {
         try {
             const response = await axios.put(
