@@ -7,9 +7,15 @@ import AddNewCoupon from "./pages/coupon/AddNewCoupon";
 import UserHome from "./pages/user/UserHome";
 import Navbar from "./components/Navbar";
 import EditCoupon from "./pages/coupon/EditCoupon";
+import { useSelector } from "react-redux";
 
 function App() {
   const location = useLocation();
+  const { user } = useSelector((state) => state.auth);
+
+  // Helper function to check if the user is authenticated
+  const isAuthenticated = user !== null;
+  const isAdmin = user?.role === "admin";
 
   return (
     <>
@@ -18,16 +24,16 @@ function App() {
 
       <Routes>
         {/* Public Routes */}
-        <>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </>
+        <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login />} />
+        <Route path="/register" element={isAuthenticated ? <Navigate to="/" /> : <Register />} />
+
+        {/* Protected User Routes */}
+        <Route path="/" element={isAuthenticated ? <UserHome /> : <Navigate to="/login" />} />
 
         {/* Protected Admin Routes */}
-        <Route path="/" element={<UserHome />} />
-        <Route path="/admin" element={<AdminHome />} />
-        <Route path="/admin/add" element={<AddNewCoupon />} />
-        <Route path="/admin/update/:id" element={<EditCoupon />} />
+        <Route path="/admin" element={isAuthenticated && isAdmin ? <AdminHome /> : <Navigate to="/login" />} />
+        <Route path="/admin/add" element={isAuthenticated && isAdmin ? <AddNewCoupon /> : <Navigate to="/login" />} />
+        <Route path="/admin/update/:id" element={isAuthenticated && isAdmin ? <EditCoupon /> : <Navigate to="/login" />} />
       </Routes>
 
       <Toaster />

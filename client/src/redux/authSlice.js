@@ -31,35 +31,48 @@ export const registerAdmin = createAsyncThunk(
 
 export const loginAdmin = createAsyncThunk(
     "/auth/login",
-    async (formData) => {
+    async (formData, { rejectWithValue }) => {
         try {
             const response = await axios.post(
                 "https://internship-project-backend-ak09.onrender.com/api/auth/login",
                 formData,
-                {
-                    withCredentials: true
-                }
-            )
-            return response.data;
+                { withCredentials: true }
+            );
+
+            if (response.data.success) {
+                // Store authentication state
+                localStorage.setItem("isAuthenticated", "true");
+                localStorage.setItem("user", JSON.stringify(response.data.user));
+                return response.data;
+            } else {
+                return rejectWithValue(response.data.message || "Login failed");
+            }
         } catch (error) {
-            return (error.response?.data);
+            return rejectWithValue(error.response?.data?.message || "Login request failed");
         }
     }
-)
+);
+
 
 export const logoutAdmin = createAsyncThunk(
     "/auth/logout",
-    async () => {
-        const response = await axios.post(
-            "https://internship-project-backend-ak09.onrender.com/api/auth/logout",
-            {},
-            {
-                withCredentials: true
-            }
-        )
-        return response.data.message;
+    async (_, { rejectWithValue }) => {
+        try {
+            await axios.post(
+                "https://internship-project-backend-ak09.onrender.com/api/auth/logout",
+                {},
+                { withCredentials: true }
+            );
+
+            localStorage.removeItem("isAuthenticated");
+            localStorage.removeItem("user");
+
+            return true;
+        } catch (error) {
+            return rejectWithValue("Logout failed");
+        }
     }
-)
+);
 
 export const AuthSlice = createSlice({
     name: 'auth',
@@ -86,7 +99,7 @@ export const AuthSlice = createSlice({
             })
             .addCase(loginAdmin.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.user = action.payload.success ? action.payload.user : null;
+                state.user = action.payload.user;
                 state.isAuthenticated = action.payload.success;
             })
             .addCase(loginAdmin.rejected, (state) => {
