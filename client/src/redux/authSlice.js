@@ -12,7 +12,7 @@ export const registerAdmin = createAsyncThunk(
     async (formData) => {
         try {
             const response = await axios.post(
-                "http://localhost:5000/api/auth/register",
+                "https://internship-project-backend-ak09.onrender.com/api/auth/register",
                 formData,
                 {
                     withCredentials: true,
@@ -34,7 +34,7 @@ export const loginAdmin = createAsyncThunk(
     async (formData) => {
         try {
             const response = await axios.post(
-                "http://localhost:5000/api/auth/login",
+                "https://internship-project-backend-ak09.onrender.com/api/auth/login",
                 formData,
                 {
                     withCredentials: true
@@ -51,7 +51,7 @@ export const logoutAdmin = createAsyncThunk(
     "/auth/logout",
     async () => {
         const response = await axios.post(
-            "http://localhost:5000/api/auth/logout",
+            "https://internship-project-backend-ak09.onrender.com/api/auth/logout",
             {},
             {
                 withCredentials: true
