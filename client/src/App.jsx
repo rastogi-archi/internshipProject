@@ -20,7 +20,6 @@ function App() {
 
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<UserHome />} />
         {!isAuthenticated && (
           <>
             <Route path="/login" element={<Login />} />
@@ -29,6 +28,7 @@ function App() {
         )}
 
         {/* Protected Admin Routes */}
+        <Route path="/" element={isAuthenticated ? <UserHome /> : <Navigate to="/login" />} />
         <Route path="/admin" element={isAuthenticated ? <AdminHome /> : <Navigate to="/login" />} />
         <Route path="/admin/add" element={isAuthenticated ? <AddNewCoupon /> : <Navigate to="/login" />} />
         <Route path="/admin/update/:id" element={isAuthenticated ? <EditCoupon /> : <Navigate to="/login" />} />
