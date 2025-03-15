@@ -7,33 +7,36 @@ import AddNewCoupon from "./pages/coupon/AddNewCoupon";
 import UserHome from "./pages/user/UserHome";
 import Navbar from "./components/Navbar";
 import EditCoupon from "./pages/coupon/EditCoupon";
+import { useSelector } from "react-redux";
 
 function App() {
   const location = useLocation();
+  const { isAuthenticated } = useSelector(state => state.auth);
 
   return (
     <>
       {/* Conditionally render Navbar */}
       {location.pathname !== "/login" && location.pathname !== "/register" && <Navbar />}
 
+
       <Routes>
         <Route path="/" element={
-            <UserHome />
-        } />
-        <Route path="/login" element={
-          <Login />
-        } />
-        <Route path="/register" element={
-          <Register />
+          <UserHome />
         } />
         <Route path="/admin" element={
-            <AdminHome />
+          <AdminHome />
         } />
+         {!isAuthenticated && (
+          <>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </>
+        )}
         <Route path="/admin/add" element={
-            <AddNewCoupon />
+          <AddNewCoupon />
         } />
         <Route path="/admin/update/:id" element={
-            <EditCoupon />
+          <EditCoupon />
         } />
       </Routes>
 
