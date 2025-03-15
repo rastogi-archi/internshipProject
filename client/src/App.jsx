@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -11,33 +11,27 @@ import { useSelector } from "react-redux";
 
 function App() {
   const location = useLocation();
-  const { isAuthenticated } = useSelector(state => state.auth);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   return (
     <>
       {/* Conditionally render Navbar */}
       {location.pathname !== "/login" && location.pathname !== "/register" && <Navbar />}
 
-
       <Routes>
-        <Route path="/" element={
-          <UserHome />
-        } />
-        <Route path="/admin" element={
-          <AdminHome />
-        } />
-         {!isAuthenticated && (
+        {/* Public Routes */}
+        <Route path="/" element={<UserHome />} />
+        {!isAuthenticated && (
           <>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </>
         )}
-        <Route path="/admin/add" element={
-          <AddNewCoupon />
-        } />
-        <Route path="/admin/update/:id" element={
-          <EditCoupon />
-        } />
+
+        {/* Protected Admin Routes */}
+        <Route path="/admin" element={isAuthenticated ? <AdminHome /> : <Navigate to="/login" />} />
+        <Route path="/admin/add" element={isAuthenticated ? <AddNewCoupon /> : <Navigate to="/login" />} />
+        <Route path="/admin/update/:id" element={isAuthenticated ? <EditCoupon /> : <Navigate to="/login" />} />
       </Routes>
 
       <Toaster />
