@@ -24,14 +24,10 @@ function App() {
           </CheckAuth>
         } />
         <Route path="/login" element={
-          <CheckAuth>
-            <Login />
-          </CheckAuth>
+          <Login />
         } />
         <Route path="/register" element={
-          <CheckAuth>
-            <Register />
-          </CheckAuth>
+          <Register />
         } />
         <Route path="/admin" element={
           <CheckAuth>
