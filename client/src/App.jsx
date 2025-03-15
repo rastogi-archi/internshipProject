@@ -7,11 +7,9 @@ import AddNewCoupon from "./pages/coupon/AddNewCoupon";
 import UserHome from "./pages/user/UserHome";
 import Navbar from "./components/Navbar";
 import EditCoupon from "./pages/coupon/EditCoupon";
-import { useSelector } from "react-redux";
 
 function App() {
   const location = useLocation();
-  const { isAuthenticated } = useSelector((state) => state.auth);
 
   return (
     <>
@@ -20,18 +18,16 @@ function App() {
 
       <Routes>
         {/* Public Routes */}
-        {!isAuthenticated && (
-          <>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </>
-        )}
+        <>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </>
 
         {/* Protected Admin Routes */}
-        <Route path="/" element={isAuthenticated ? <UserHome /> : <Navigate to="/login" />} />
-        <Route path="/admin" element={isAuthenticated ? <AdminHome /> : <Navigate to="/login" />} />
-        <Route path="/admin/add" element={isAuthenticated ? <AddNewCoupon /> : <Navigate to="/login" />} />
-        <Route path="/admin/update/:id" element={isAuthenticated ? <EditCoupon /> : <Navigate to="/login" />} />
+        <Route path="/" element={<UserHome />} />
+        <Route path="/admin" element={<AdminHome />} />
+        <Route path="/admin/add" element={<AddNewCoupon />} />
+        <Route path="/admin/update/:id" element={<EditCoupon />} />
       </Routes>
 
       <Toaster />
