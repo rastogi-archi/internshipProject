@@ -12,7 +12,7 @@ export const addNewCoupon = createAsyncThunk(
     async (formData) => {
         try {
             const response = await axios.post(
-                "http://localhost:5000/api/coupon/admin/add",
+                "https://internship-project-backend-ak09.onrender.com/api/coupon/admin/add",
                 formData,
                 {
                     withCredentials: true,
@@ -35,7 +35,7 @@ export const getAllCoupons = createAsyncThunk(
     async () => {
         try {
             const response = await axios.get(
-                "http://localhost:5000/api/coupon/all",
+                "https://internship-project-backend-ak09.onrender.com/api/coupon/all",
             )
             return response.data;
         } catch (error) {
@@ -49,7 +49,7 @@ export const claimCoupon = createAsyncThunk(
     "coupon/claim",
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.post("http://localhost:5000/api/coupon/claim");
+            const response = await axios.post("https://internship-project-backend-ak09.onrender.com/api/coupon/claim");
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data);
@@ -63,7 +63,7 @@ export const deleteCoupon = createAsyncThunk(
     async (id) => {
         try {
             const response = await axios.delete(
-                `http://localhost:5000/api/coupon/admin/delete/${id}`,
+                `https://internship-project-backend-ak09.onrender.com/api/coupon/admin/delete/${id}`,
             )
             return id;
         } catch (error) {
@@ -78,7 +78,7 @@ export const updateCouponStatus = createAsyncThunk(
     async ({ id, data }) => {
         try {
             const response = await axios.put(
-                `http://localhost:5000/api/coupon/admin/toggleStatus/${id}`,
+                `https://internship-project-backend-ak09.onrender.com/api/coupon/admin/toggleStatus/${id}`,
                 data
             )
             return response.data;
@@ -90,7 +90,7 @@ export const updateCouponStatus = createAsyncThunk(
 
 export const getCouponById = createAsyncThunk("/coupon/getCouponById", async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/coupon/getCouponById/${id}`);
+      const response = await axios.get(`https://internship-project-backend-ak09.onrender.com/api/coupon/getCouponById/${id}`);
       return response.data; // Return the coupon data
     } catch (error) {
       return rejectWithValue(error.response?.data || "Failed to fetch coupon");
@@ -100,7 +100,7 @@ export const getCouponById = createAsyncThunk("/coupon/getCouponById", async (id
 
 export const updateCoupon = async (id, updatedData) => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/coupon/admin/update/${id}`, updatedData);
+      const response = await axios.put(`https://internship-project-backend-ak09.onrender.com/api/coupon/admin/update/${id}`, updatedData);
       console.log("Updated Coupon:", response.data);
     } catch (error) {
       console.error("Error updating coupon:", error.response?.data || error.message);
